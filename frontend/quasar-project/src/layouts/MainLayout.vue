@@ -29,7 +29,7 @@ const linksList = [
   {
     title: 'Početna',
     icon: 'favorite',
-    link: '#/',
+    link: '/',
   },
   {
     title: 'Pregled vozila',

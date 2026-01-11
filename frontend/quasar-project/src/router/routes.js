@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/pretraga-vozila',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [{ path: '', component: () => import('pages/PretrazivanjePage.vue') }],
   },
   {
     path: '/o-nama',
