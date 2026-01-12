@@ -339,4 +339,23 @@ app.patch('/api/rezervacije/:id/otkazi', (req, res) => {
   );
 });
 
+// DEFINICIJA RUTE KOJU FRONTEND POZIVA
+app.get("/api/automobili", (req, res) => {
+  // SQL upit za dohvaćanje SVIH potrebnih polja
+  const query =
+    "SELECT model, godina, tip, gorivo, mjenjac, opis FROM automobili"; // ISPRAVNA SINTAKSA: db.query(sql, callback)
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Greška pri dohvaćanju automobila:", err);
+      res
+        .status(500)
+        .json({ error: "Greška servera pri dohvaćanju podataka iz baze." });
+    } else {
+      // Vraća sirove podatke, npr. [{model: 'Toyota RAV4', godina: 2021, ...}, ...]
+      res.json(results);
+    }
+  });
+});
+
 app.listen(3000, () => console.log('Server radi na portu 3000'));

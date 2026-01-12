@@ -5,9 +5,9 @@ const routes = [
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
   {
-    path: '/vozila',
+    path: '/pregled-vozila',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [{ path: '', component: () => import('pages/PregledVozila.vue') }],
   },
   {
     path: '/pretraga-vozila',

@@ -68,7 +68,7 @@ const linksList = [
     title: 'Pregled vozila',
     caption: 'Pregledajte našu ponudu',
     icon: 'list',
-    link: '#/vozila',
+    link: '#/pregled-vozila',
   },
   {
     title: 'Pretraživanje vozila',
