@@ -2,7 +2,6 @@
   <q-page padding class="bg-grey-2">
     <div class="q-pa-md row items-start q-gutter-md">
       <q-card v-for="rez in rezervacije" :key="rez.id" class="my-card" flat bordered>
-        <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
 
         <q-card-section>
           <div class="text-h6 q-mb-sm">{{ rez.naziv }}</div>
