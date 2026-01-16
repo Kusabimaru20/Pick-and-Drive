@@ -18,13 +18,6 @@ db.connect(err => {
   else console.log('Povezano s MySQL bazom!');
 });
 
-app.get('/automobili', (req, res) => {
-  db.query('SELECT * FROM automobili', (err, results) => {
-    if (err) res.status(500).send(err);
-    else res.json(results);
-  });
-});
-
 // GET /automobili - svi automobili s lokacijom
 app.get('/automobili', (req, res) => {
     const sql = `
@@ -113,7 +106,6 @@ app.get('/pretraga', (req, res) => {
 app.post('/api/Korisnik', (req, res) => {
   const { ime, prezime, email, korisnicko_ime, lozinka } = req.body;
 
-  // Pitam bazu koji je trenutno najveci ID
   db.query('SELECT MAX(id) AS maxId FROM korisnici', (err, results) => {
     if (err) {
       console.error("Greška pri dohvaćanju ID-a:", err);
@@ -175,6 +167,90 @@ app.get('/api/korisnici', (req, res) => {
     res.json(results);
   });
 });
+
+app.get('/api/user', (req, res) => {
+  const userId = parseInt(req.headers['x-user-id']);
+
+  db.query(
+    'SELECT id, ime, prezime, korisnicko_ime FROM korisnici WHERE id = ?',
+    [userId],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: 'Greška u bazi' });
+      if (results.length === 0) return res.status(404).json({ error: 'Korisnik ne postoji' });
+
+      res.json(results[0]);
+    }
+  );
+});
+
+
+app.put('/api/user', (req, res) => {
+  const userId = parseInt(req.headers['x-user-id']);
+
+
+  const {
+    ime,
+    prezime,
+    korisnicko_ime,
+  } = req.body;
+
+
+  db.query( 'SELECT * FROM korisnici WHERE id = ?',
+    [userId],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Greška u bazi' });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ error: 'Korisnik ne postoji' });
+      }
+
+      const korisnik = results[0];
+      const fields = [];
+      const values = [];
+
+      if (ime) {
+        fields.push('ime = ?');
+        values.push(ime);
+      }
+
+      if (prezime) {
+        fields.push('prezime = ?');
+        values.push(prezime);
+      }
+
+      if (korisnicko_ime) {
+        fields.push('korisnicko_ime = ?');
+        values.push(korisnicko_ime);
+      }
+
+      // Ako nema promjena
+      if (fields.length === 0) {
+        return res.json({ message: 'Nema promjena' });
+      }
+
+      values.push(userId);
+
+      const sql = `
+        UPDATE korisnici
+        SET ${fields.join(', ')}
+        WHERE id = ?
+      `;
+
+      db.query(sql, values, err => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Greška pri spremanju' });
+        }
+
+        res.json({ message: 'Podaci uspješno ažurirani' });
+      });
+    }
+  );
+});
+
 
 // Brisanje korisnika po ID-u
 app.delete('/api/Korisnik/:id', (req, res) => {
@@ -339,8 +415,7 @@ app.patch('/api/rezervacije/:id/otkazi', (req, res) => {
   );
 });
 
-// DEFINICIJA RUTE KOJU FRONTEND POZIVA
-app.get("/api/automobili", (req, res) => {
+app.get("/api/automobili-potrebnapolja", (req, res) => {
   // SQL upit za dohvaćanje SVIH potrebnih polja
   const query =
     "SELECT model, godina, tip, gorivo, mjenjac, opis FROM automobili"; // ISPRAVNA SINTAKSA: db.query(sql, callback)

@@ -37,50 +37,10 @@
             </div>
           </div>
 
-          <div class="row items-center">
-            <div class="col-12 col-sm-4 text-subtitle1 text-grey-8">Adresa e-pošte</div>
+          <div class="row items-center">  
+            <div class="col-12 col-sm-4 text-subtitle1 text-grey-8">Korisničko ime</div>
             <div class="col-12 col-sm-8">
-              <q-input v-model="user.email" dense outlined placeholder="primjer@mail.com">
-                <template v-slot:prepend>
-                  <q-icon name="error" color="negative" size="xs" />
-                </template>
-              </q-input>
-            </div>
-          </div>
-
-          <div class="row items-center">
-            <div class="col-12 col-sm-4 text-subtitle1 text-grey-8">Grad</div>
-            <div class="col-12 col-sm-8">
-              <q-input v-model="user.grad" dense outlined placeholder="Unesite grad" />
-            </div>
-          </div>
-
-          <div class="row items-center">
-            <div class="col-12 col-sm-4 text-subtitle1 text-grey-8">Država</div>
-            <div class="col-12 col-sm-8">
-              <q-select
-                v-model="user.drzava"
-                :options="drzavaOptions"
-                dense
-                outlined
-                emit-value
-                map-options
-                display-value=""
-                placeholder="Odaberite državu"
-              />
-            </div>
-          </div>
-
-          <div class="row items-center">
-            <div class="col-12 col-sm-4 text-subtitle1 text-grey-8">Vremenska zona</div>
-            <div class="col-12 col-sm-8">
-              <q-select
-                v-model="user.vremenskaZona"
-                :options="vremenskaOptions"
-                dense
-                outlined
-                placeholder="Odaberite zonu"
-              />
+              <q-input v-model="user.korisnicko_ime" dense outlined placeholder="Unesite novo korisničko ime" />
             </div>
           </div>
 
@@ -88,38 +48,56 @@
             <q-btn label="Spremi promjene" color="primary" @click="saveSettings" />
           </div>
         </q-card-section>
-      </q-expansion-item>
+      </q-expansion-item> 
     </q-card>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useQuasar } from 'quasar'
+import { onMounted } from 'vue'
+import axios from 'axios'
 
-const $q = useQuasar()
+const userId = localStorage.getItem('ID_korisnika')
 
-// Podaci su inicijalno prazni
+// Podaci su inicijalno prazni, DODANO korisnicko ime, maknuti grad i zona
 const user = ref({
   ime: '',
   prezime: '',
-  email: '',
-  grad: '',
-  drzava: null,
-  vremenskaZona: null,
+  korisnicko_ime: '',
 })
 
-const drzavaOptions = ['Hrvatska', 'Slovenija', 'Austrija', 'Njemačka']
-const vremenskaOptions = ['Europe/Zagreb', 'UTC', 'Europe/London']
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('http://localhost:3000/api/user', {
+      headers: {'x-user-id': userId }
+    })
+    user.value = data
+  } catch {
+    alert("Greška pri dohvaćanju podataka.");
+  }
+})
 
-const saveSettings = () => {
-  // Ovdje ide logika za slanje podataka na server (npr. axios.post)
-  console.log('Spremanje podataka:', user.value)
-  $q.notify({
-    color: 'positive',
-    message: 'Postavke su uspješno spremljene!',
-    icon: 'check',
-  })
+const saveSettings = async () => { //Editano za error i par sitnica + da se korisnicko ime update na layoutu
+  try {
+    console.log('Spremanje podataka:', user.value)
+    await axios.put('http://localhost:3000/api/user', 
+    {
+        ime: user.value.ime,
+        prezime: user.value.prezime,
+        korisnicko_ime: user.value.korisnicko_ime
+    },
+    {
+      headers: { 'x-user-id': userId
+      }
+    })
+    
+    alert("Postavke su uspješno spremljene!");
+    localStorage.setItem('korisnicko_ime', user.value.korisnicko_ime)
+    window.location.reload()
+  } catch {
+    alert("Spremanje nije uspjelo.");
+  }
 }
 </script>
 

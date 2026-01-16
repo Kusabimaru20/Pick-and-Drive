@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/',
+    path: '/', //Uređene rute
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
@@ -12,19 +12,19 @@ const routes = [
       { path: 'prijava', component: () => import('pages/PrijavaPage.vue') },
       { path: 'registracija', component: () => import('pages/RegistracijaPage.vue') },
       { path: 'postavkekorisnika', component: () => import('pages/PostavkeKorisnika.vue') }
-    ], 
+    ]
   },
   {
-  path: "/admin",
-  component: () => import("layouts/AdminLayout.vue"),
-  meta: { requiresAdmin: true },
-  children: [
-    { path: "", component: () => import("pages/AdminPage.vue") },
-    { path: "vozila", component: () => import("pages/AdminVozila.vue") }, 
-    { path: "rezervacije", component: () => import("pages/AdminRezervacije.vue") },
-    { path: "korisnici", component: () => import("pages/UpravljanjeKorisnicima.vue") }
-  ]
- },
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    meta: { requiresAdmin: true },
+    children: [
+      { path: "", component: () => import("pages/AdminPage.vue") },
+      { path: "vozila", component: () => import("pages/AdminVozila.vue") }, 
+      { path: "rezervacije", component: () => import("pages/AdminRezervacije.vue") },
+      { path: "korisnici", component: () => import("pages/UpravljanjeKorisnicima.vue") }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it

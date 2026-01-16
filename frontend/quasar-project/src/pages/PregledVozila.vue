@@ -99,7 +99,6 @@
       <img :src="vozilo.slika" />
       <q-card-section>
         <div class="text-h6">{{ vozilo.ime }} ({{ vozilo.godina || 'N/A' }})</div>
-        <div class="text-subtitle2 q-mt-sm">Mjenjač: {{ vozilo.mjenjac || 'N/A' }}</div>
         <div class="text-caption text-grey q-mt-xs">
           {{ vozilo.opis ? vozilo.opis.substring(0, 50) + '...' : 'Nema opisa u bazi.' }}
         </div>
@@ -180,7 +179,7 @@ const isLoading = ref(false)
 const prikazModala = ref(false)
 const odabranoVozilo = ref(null)
 
-const API_URL = 'http://localhost:3000/api/automobili'
+const API_URL = 'http://localhost:3000/api/automobili-potrebnapolja'
 
 const primarnaVozila = ref([
   { ime: 'BMW X5', slika: '/slike/BMWX5.jpg', kategorija: 'SUV / Terenci' },
