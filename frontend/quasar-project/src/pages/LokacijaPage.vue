@@ -74,7 +74,7 @@ const filteredLocations = computed(() => {
 // Dohvaćanje podataka s tvog servera
 async function fetchLocations() {
   try {
-    const response = await fetch('http://localhost:3000/lokacije')
+    const response = await fetch('http://localhost:3000/lokacije') //bile su male greške u Heidi, pa je to editano
     const data = await response.json()
     locations.value = data
     rebuildMarkers()
