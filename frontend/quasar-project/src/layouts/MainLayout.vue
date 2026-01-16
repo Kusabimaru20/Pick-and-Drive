@@ -113,7 +113,7 @@ const linksList = [
     title: 'Postavke',
     caption: 'Postavke korisnika',
     icon: 'settings',
-    link: '#/postavke',
+    link: '#/postavkekorisnika',
     meta:'korisnik',
   },
 ]

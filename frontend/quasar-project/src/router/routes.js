@@ -2,47 +2,17 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
-  },
-  {
-    path: '/pregled-vozila',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PregledVozila.vue') }],
-  },
-  {
-    path: '/pretraga-vozila',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PretrazivanjePage.vue') }],
-  },
-  {
-    path: '/mojerezervacije',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/MojeRezervacijePage.vue') }],
-  },
-  {
-    path: '/onama',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/OnamaPage.vue') }],
-  },
-  {
-    path: '/lokacije',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/LokacijaPage.vue') }],
-  },
-  {
-    path: '/prijava',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/PrijavaPage.vue') }],
-  },
-  {
-    path: '/registracija',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/RegistracijaPage.vue') }],
-  },
-  {
-    path: '/postavke',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      { path: 'pregled-vozila', component: () => import('pages/PregledVozila.vue') },
+      { path: 'pretraga-vozila', component: () => import('pages/PretrazivanjePage.vue') },
+      { path: 'mojerezervacije', component: () => import('pages/MojeRezervacijePage.vue') },
+      { path: 'onama', component: () => import('pages/OnamaPage.vue') },
+      { path: 'lokacije', component: () => import('pages/LokacijaPage.vue') },
+      { path: 'prijava', component: () => import('pages/PrijavaPage.vue') },
+      { path: 'registracija', component: () => import('pages/RegistracijaPage.vue') },
+      { path: 'postavkekorisnika', component: () => import('pages/PostavkeKorisnika.vue') }
+    ], 
   },
   {
   path: "/admin",
