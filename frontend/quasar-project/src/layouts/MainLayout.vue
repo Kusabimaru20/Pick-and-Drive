@@ -77,12 +77,6 @@ const linksList = [
     link: '#/pretraga-vozila',
   },
   {
-    title: 'Moje rezervacije',
-    caption: '',
-    icon: 'person',
-    link: '#/mojerezervacije',
-  },
-  {
     title: 'O nama',
     caption: 'Pitanja i Kontakt',
     icon: 'info',
@@ -109,21 +103,35 @@ const linksList = [
     meta:'gost',
   },
   {
+    title: 'Moje rezervacije',
+    caption: '',
+    icon: 'person',
+    link: '#/mojerezervacije',
+    meta:'korisnik',
+  },
+  {
     title: 'Postavke',
-    caption: '???',
+    caption: 'Postavke korisnika',
     icon: 'settings',
     link: '#/postavke',
+    meta:'korisnik',
   },
 ]
 
 // funkcija koja filtrira linkove koje ne zelim vidjet kad je korisnik prijavljen
 const filtriraniLinkovi = computed(() => {
-  if (korisnikIme.value) {
-    // Ako postoji korisnikIme, izbaci linkove koji imaju meta: 'gost'
-    return linksList.filter(link => link.meta !== 'gost')
-  }
-  // Inace pokazi sve
-  return linksList
+  const prijavljen = !!korisnikIme.value //boolean value
+
+  return linksList.filter(link => { //Promjenjeno da ima i linkove koji se prikazuju samo prijavljenima
+    // samo gost
+    if (link.meta === 'gost') return !prijavljen
+
+    // samo prijavljeni
+    if (link.meta === 'korisnik') return prijavljen
+
+    // svi ostali
+    return true
+  })
 })
 
 function toggleLeftDrawer() {

@@ -46,7 +46,7 @@ export default {
       try {
         const userId = localStorage.getItem('ID_korisnika')
         if (!userId) {
-          console.error('Korisnik nije prijavljen')
+           this.$router.push('/prijava'); // Promjenjeno iz alerta da prebaci na prijavu
           return
         }
 
