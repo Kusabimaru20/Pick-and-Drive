@@ -4,7 +4,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: 'pregled-vozila', component: () => import('pages/PregledVozila.vue') },
+      { path: 'pregled-vozila/:kategorija?', component: () => import('pages/PregledVozila.vue') }, //koja je kategorija aktivna
       { path: 'pretraga-vozila', component: () => import('pages/PretrazivanjePage.vue') },
       { path: 'mojerezervacije', component: () => import('pages/MojeRezervacijePage.vue') },
       { path: 'onama', component: () => import('pages/OnamaPage.vue') },

@@ -416,10 +416,8 @@ app.patch('/api/rezervacije/:id/otkazi', (req, res) => {
 });
 
 app.get("/api/automobili-potrebnapolja", (req, res) => {
-  // SQL upit za dohvaćanje SVIH potrebnih polja
-  const query =
-    "SELECT model, godina, tip, gorivo, mjenjac, opis FROM automobili"; // ISPRAVNA SINTAKSA: db.query(sql, callback)
-
+  // SQL upit za dohvaćanje SVIH potrebnih polja, dodan naziv i slike
+  const query = "SELECT naziv, model, godina, tip, gorivo, mjenjac, slika, opis FROM automobili";
   db.query(query, (err, results) => {
     if (err) {
       console.error("Greška pri dohvaćanju automobila:", err);
@@ -427,7 +425,6 @@ app.get("/api/automobili-potrebnapolja", (req, res) => {
         .status(500)
         .json({ error: "Greška servera pri dohvaćanju podataka iz baze." });
     } else {
-      // Vraća sirove podatke, npr. [{model: 'Toyota RAV4', godina: 2021, ...}, ...]
       res.json(results);
     }
   });

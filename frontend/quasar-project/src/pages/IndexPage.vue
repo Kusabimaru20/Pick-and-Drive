@@ -14,7 +14,7 @@
 
         <q-card-section>
           <div align="left">
-            <q-btn flat rounded label="SUV / Terenci" style="font-size: 20px; font-weight: bold;" @click="''"/>
+            <q-btn flat rounded label="SUV / Terenci" style="font-size: 20px; font-weight: bold;" @click="idiNaKategoriju('SUV')"/>
           </div>
         </q-card-section>
       </q-card>
@@ -23,7 +23,7 @@
 
         <q-card-section>
           <div align="left">
-            <q-btn flat rounded label="Sedan / Limuzina" style="font-size: 20px; font-weight: bold;" @click="''"/>
+            <q-btn flat rounded label="Sedan / Limuzina" style="font-size: 20px; font-weight: bold;" @click="idiNaKategoriju('Limuzina')"/>
           </div>
         </q-card-section>
       </q-card>
@@ -32,21 +32,20 @@
 
         <q-card-section>
           <div align="left">
-            <q-btn flat rounded label="Sportski automobili" style="font-size: 20px; font-weight: bold; text-align: left;" @click="''"/>
+            <q-btn flat rounded label="Sportski automobili" style="font-size: 20px; font-weight: bold; text-align: left;" @click="idiNaKategoriju('Sportski')"/>
           </div>
         </q-card-section>
       </q-card>
       <q-card class="my-card">
         <img src="/slike/hatchback(0).jpeg">
-
         <q-card-section>
           <div align="left">
-            <q-btn flat rounded label="Kompaktna vozila" style="font-size: 20px; font-weight: bold;" @click="''"/>
+            <q-btn flat rounded label="Kompaktna vozila" style="font-size: 20px; font-weight: bold;" @click="idiNaKategoriju('Kompakt')"/>
           </div>
         </q-card-section>
       </q-card>
       <q-card class="my-card">
-        <img src="/slike/drugo.jpg" @click="''" class="cursor-pointer">
+        <img src="/slike/drugo.jpg" @click="idiNaKategoriju('Ostalo')" class="cursor-pointer">
       </q-card>
     </div>
     <div class="row items-center q-pa-xl">
@@ -91,7 +90,12 @@
 
 
 <script setup>
-//
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const idiNaKategoriju = (kategorija) => {
+  router.push(`/pregled-vozila/${encodeURIComponent(kategorija)}`)
+}
 </script>
 
 <style lang="sass" scoped>

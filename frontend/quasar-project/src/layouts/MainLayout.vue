@@ -58,17 +58,11 @@ onMounted(() => {
   korisnikIme.value = localStorage.getItem('korisnicko_ime') || ''
 })
 
-const linksList = [
+const linksList = [ // maknut pregled posto se na pocetku pristupa sa indexa
   {
     title: 'Početna',
     icon: 'favorite',
     link: '/',
-  },
-  {
-    title: 'Pregled vozila',
-    caption: 'Pregledajte našu ponudu',
-    icon: 'list',
-    link: '#/pregled-vozila',
   },
   {
     title: 'Pretraživanje vozila',
