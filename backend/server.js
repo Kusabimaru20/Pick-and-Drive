@@ -396,13 +396,13 @@ app.get('/api/rezervacije/moje', (req, res) => {
   const userIdHeader = req.headers['x-user-id'];  // case-insensitive
 
   if (!userIdHeader) {
-    return res.status(401).json({ error: 'Missing X-User-ID header' });
+    return res.status(401).json({ error: 'Nedostaje X-User-ID header.' });
   }
 
   const userId = parseInt(userIdHeader);
 
   if (isNaN(userId)) {
-    return res.status(400).json({ error: 'Invalid user ID format' });
+    return res.status(400).json({ error: 'Netočan ID format.' });
   }
 
   db.query(
