@@ -484,13 +484,30 @@ app.post('/rezervacije', (req, res) => {
 
   const dani = Math.ceil((doKad - odKad) / (1000 * 60 * 60 * 24))
 
-  // SELECT
-  db.query(
-    'SELECT cijena_dan FROM automobili WHERE id = ?',
-    [automobil_id],
-    (err, rows) => {
+  const sqlCheck = `
+    SELECT COUNT(*) AS zauzeto
+    FROM rezervacije
+    WHERE automobil_id = ?
+      AND status != 'Otkazano'
+      AND ? <= datum_do
+      AND ? >= datum_od
+  `;
+
+  db.query(sqlCheck, [automobil_id, datum_od, datum_do], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Greška baze (provjera dostupnosti)' });
+    }
+
+    if (result[0].zauzeto > 0) {
+      return res.status(400).json({
+        error: 'Vozilo je već rezervirano u odabranom terminu',
+      });
+    }
+
+    // SELECT
+    db.query( 'SELECT cijena_dan FROM automobili WHERE id = ?', [automobil_id], (err, rows) => {
       if (err) {
-      return res.status(500).json({ error: 'Greška baze (SELECT)' })
+        return res.status(500).json({ error: 'Greška baze (SELECT)' })
       }
 
       const ukupna_cijena = dani * rows[0].cijena_dan
@@ -508,9 +525,9 @@ app.post('/rezervacije', (req, res) => {
           }
         res.status(200).json({ message: 'Uspjeh!' });
         }
-      )
-    }
-  );
+      );
+    })
+  })
 });
 
 app.listen(3000, () => console.log('Server radi na portu 3000'));

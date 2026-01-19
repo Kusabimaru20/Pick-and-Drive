@@ -64,7 +64,7 @@ export default {
         
     } catch (error) {
         console.error("Greška pri rezervaciji:", error);
-        alert('Došlo je do pogreške prilikom rezervacije. Pokušajte ponovno.');
+        alert('Vozilo je već rezervirano u odabranom terminu. Pokušajte ponovno.');
     }
 }
     return {
